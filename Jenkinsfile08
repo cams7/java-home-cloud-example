@@ -3,6 +3,7 @@ node {
       git 'https://github.com/cams7/java-home-cloud-example'
    }
    stage('Compile Package') {
-    sh 'mvn package'
+      def mvnHome = tool name: 'maven', type: 'maven'      
+      sh "$mvnHome/bin/mvn package"
    }
 }
