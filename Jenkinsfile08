@@ -1,0 +1,8 @@
+node {
+   stage('SCM Checkout') {
+      git 'https://github.com/cams7/java-home-cloud-example'
+   }
+   stage('Compile Package') {
+    sh 'mvn package'
+   }
+}
