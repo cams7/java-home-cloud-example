@@ -6,14 +6,14 @@ node{
       // Get maven home path
       def mvnHome = tool name: 'maven', type: 'maven'   
       sh "${mvnHome}/bin/mvn package"
-   }   
+   }
    stage('SonarQube Analysis') {
-      def mvnHome = tool name: 'maven', type: 'maven'
-      withSonarQubeEnv('java-home-cloud-example11-sonarqube') { 
-         sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.projectKey=java-home-cloud-example11 -Dsonar.host.url=http://172.42.42.200:9000 -Dsonar.login=5c41c21b374f25d809d46c9d431888eb7a4c85c4"
+      def scannerHome = tool 'sonarqube-scanner';
+      withSonarQubeEnv('java-home-cloud-example11-sonarqube') {
+         sh "${scannerHome}/bin/sonar-scanner"
       }
-    }    
-    stage('Slack Notification'){
+   }  
+   stage('Slack Notification'){
        slackSend baseUrl: 'https://hooks.slack.com/services/',
        channel: '#java-home-cloud-example-10',
        color: 'good', 
